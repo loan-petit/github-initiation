@@ -1,0 +1,26 @@
+name: Deploy with Firebase
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  firebase-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch repo
+        uses: actions/checkout@master
+      - name: Install node
+        uses: actions/setup-node@master
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Deploy with Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          # Generate with: firebase login:ci
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
