@@ -15,7 +15,11 @@ jobs:
       - name: Install node
         uses: actions/setup-node@master
 
-      - name: Install dependencies
+      - name: Install cloud function dependencies
+        run: npm install
+        working-directory: ./functions/
+
+      - name: Install hosting dependencies
         run: npm install
         working-directory: ./hosting/
 
