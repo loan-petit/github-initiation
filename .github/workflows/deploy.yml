@@ -11,16 +11,22 @@ jobs:
     steps:
       - name: Fetch repo
         uses: actions/checkout@master
+
       - name: Install node
         uses: actions/setup-node@master
+
       - name: Install dependencies
         run: npm install
+        working-directory: ./hosting/
+
       - name: Build
         run: npm run build
+        working-directory: ./hosting/
+
       - name: Deploy with Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
+          args: deploy --only hosting,functions
         env:
           # Generate with: firebase login:ci
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
